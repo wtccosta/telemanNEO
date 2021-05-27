@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head th:replace="~{base :: head('Detalhes do Agrupador')}"></head>
+
+<head>
+	<meta charset="utf-8" />
+</head>
+	
+<body onload="onLoad();">
+
+	
+	<nav th:replace="~{base :: menu}"></nav>
+	<div class="container" id="app">
+		{{message}}
+	</div>	
+
+	<div th:replace="~{base :: myScripts}"></div>
+	
+	<script>
+		function onLoad() {
+			const app = new Vue(
+				{
+					el: '#app',
+					data: {
+						message: 'Olá'
+					},
+					mounted() {
+						this.contextUrl = `${window.location.protocol}//${window.location.host}/api/v1`
+						this.execute();
+
+					},
+					methods: {
+						execute: function () {
+							axios
+								.get(`${this.contextUrl}/produtos/2`)
+								.then(response => (this.info = response.data))
+						}
+					}
+				}
+			)
+		}
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+		integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+		crossorigin="anonymous"></script>
+
+</body>
+
+</html>

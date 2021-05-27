@@ -1,0 +1,18 @@
+package br.gov.ms.corumba.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import br.gov.ms.corumba.entities.Produto;
+import br.gov.ms.corumba.repositories.ProdutosRepository;
+
+@Service
+public class ProdutoService {
+
+	@Autowired
+	private ProdutosRepository repository;
+	
+	public List<Produto> findAll() {
+		return repository.findAll();
+	}
+}

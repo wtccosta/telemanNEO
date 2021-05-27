@@ -1,0 +1,110 @@
+package br.gov.ms.corumba.model;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Data
+@NoArgsConstructor
+public class Produto {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@NotBlank(message = "O campo \"Linha ou Ramal\" não pode estar em branco.")
+	private String linhaOuRamal;
+
+//	@JsonIgnore
+	@NotNull
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Local local;
+
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
+	@NotNull
+	private PlanoOperadora planoOperadora;
+
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
+	@NotNull
+	private Preco precoDoPlano;
+
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
+	@NotNull
+	private ServicoOperadora servicoOperadora;
+
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
+	@NotNull
+	private Preco precoDoServico;
+
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
+	@NotNull
+	private Roteador roteador;
+
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
+	@NotNull
+	private VelocidadeInternet velocidadeInternet;
+
+	@ManyToOne
+	@JoinColumn(name = "agrupador_id", referencedColumnName = "id")
+	//@JsonBackReference
+	private Produto agrupador;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "agrupador")
+	@JsonManagedReference
+	private List<Produto> terminaisAgrupador = new ArrayList<>();
+
+	@JsonIgnore
+	@CreationTimestamp
+	private LocalDateTime dataCriacao;
+
+	@JsonIgnore
+	@UpdateTimestamp
+	private LocalDateTime dataEdicao;
+
+	@JsonIgnore
+	private String usuarioCadastrador;
+
+	public Produto(String linhaOuRamal, Local local, PlanoOperadora planoOperadora, Preco precoDoPlano,
+			ServicoOperadora servicoOperadora, Preco precoDoServico, Roteador roteador,
+			VelocidadeInternet velocidadeInternet, String usuarioCadastrador) {
+
+		this.linhaOuRamal = linhaOuRamal;
+		this.local = local;
+		this.planoOperadora = planoOperadora;
+		this.precoDoPlano = precoDoPlano;
+		this.servicoOperadora = servicoOperadora;
+		this.precoDoServico = precoDoServico;
+		this.roteador = roteador;
+		this.velocidadeInternet = velocidadeInternet;
+		this.usuarioCadastrador = usuarioCadastrador;
+	}
+
+}

@@ -1,0 +1,21 @@
+package br.gov.ms.corumba.configs;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import br.gov.ms.corumba.controllers.dto.ProdutoDto;
+import br.gov.ms.corumba.model.Produto;
+
+@Configuration
+public class ModelMapperConfig {
+	
+	@Bean
+	public ModelMapper modelMapper() {
+		
+		var modelMapper = new ModelMapper(); 
+		
+		return modelMapper;
+	}
+
+}

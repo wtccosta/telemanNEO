@@ -1,0 +1,23 @@
+package br.gov.ms.corumba.controllers;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import br.gov.ms.corumba.service.ProdutoService;
+
+@Controller
+@RequestMapping("/groupers")
+public class WebAgrupadorController {
+
+	@Autowired
+	private ProdutoService service;
+	
+	@GetMapping
+	public String index(Model model) {
+		model.addAttribute("produtos", service.listAll());
+		return "finances/groupers/index";
+	}
+}

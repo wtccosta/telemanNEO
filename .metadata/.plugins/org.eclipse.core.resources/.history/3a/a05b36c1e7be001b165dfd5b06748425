@@ -1,0 +1,97 @@
+package br.gov.ms.corumba.services;
+
+import org.springframework.aop.framework.AopProxyUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import br.gov.ms.corumba.entities.Produto;
+import br.gov.ms.corumba.entities.VelocidadeInternet;
+import br.gov.ms.corumba.repositories.LocalRepository;
+import br.gov.ms.corumba.repositories.PlanoRepository;
+import br.gov.ms.corumba.repositories.PrecoRepository;
+import br.gov.ms.corumba.repositories.ProdutosRepository;
+import br.gov.ms.corumba.repositories.RoteadorRepository;
+import br.gov.ms.corumba.repositories.ServicoRepository;
+import br.gov.ms.corumba.repositories.VelocidadeInternetRepository;
+import br.gov.ms.corumba.resources.dto.produtos.ListaProdutoDTO;
+import br.gov.ms.corumba.resources.dto.produtos.ProdutoDTO;
+import br.gov.ms.corumba.resources.dto.produtos.ProdutoInputDTO;
+import br.gov.ms.corumba.services.exceptions.ResourceNotFoundException;
+
+@Service
+public class ProdutoService {
+
+	@Autowired
+	private ProdutosRepository repository;
+	
+	@Autowired
+	private LocalRepository localRepository;
+	
+	@Autowired
+	private PlanoRepository planoRepository;
+	
+	@Autowired
+	private ServicoRepository ServicoRepository;
+	
+	@Autowired
+	private PrecoRepository precoRepository;
+	
+	@Autowired
+	private RoteadorRepository roteadorRepository;
+	
+	@Autowired 
+	private VelocidadeInternetRepository velocidadeInternetRepository;
+	
+	@Transactional(readOnly = true)
+	public Page<ListaProdutoDTO> findAllPaged(Pageable pageable) {
+		Page<Produto> produtos = repository.findAll(pageable);
+		return produtos
+				.map(x -> new ListaProdutoDTO(x));
+	}
+	
+	@Transactional(readOnly = true)
+	public ProdutoDTO findOne(Long id) {
+		Produto produto = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Produto não encontrado, id: "+id));
+		return new ProdutoDTO(produto);
+	}
+	
+	@Transactional(readOnly = false)
+	public ProdutoDTO persist(ProdutoInputDTO dto) {
+		Try{
+			Produto entity = new Produto();
+			copyDtoToEntity(dto, entity);
+			entity = repository.save(entity);
+			return new ProdutoDTO(entity);
+		} 
+		catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Id not found: "+ id);
+		}
+		
+	}
+	
+	private void copyDtoToEntity(ProdutoInputDTO dto, Produto entity) {
+		entity.setLinhaOuRamal(dto.getLinhaOuRamal());
+		entity.setContrato(dto.getContrato());
+		entity.setAgrupador(repository.getOne(dto.getAgrupadorId()));
+		entity.setLocal(localRepository.getOne(dto.getLocalId()));
+		entity.setServico(ServicoRepository.getOne(dto.getServicoId()));
+		entity.setPlano(planoRepository.getOne(dto.getPlanoId()));
+		entity.setLocal(localRepository.getOne(dto.getId()));
+		entity.setPrecoServico(precoRepository.getOne(dto.getPrecoServicoId()));
+		entity.setPrecoPlano(precoRepository.getOne(dto.getPrecoPlanoId()));
+		entity.setRoteador(roteadorRepository.getOne(dto.getRoteadorId()));
+		entity.setVelocidade(velocidadeInternetRepository.getOne(dto.getVelocidadeInternetId()));
+		entity.setDiaVencimento(dto.getDiaVencimento());
+		entity.setDataInstalacao(dto.getDataCadastro());
+		
+		entity.getNumerosAgrupados().clear();
+		for(ListaProdutoDTO agrupadorDto : dto.getNumerosAgrupados()) {
+			Produto prod = repository.getOne(agrupadorDto.getId());
+			entity.getNumerosAgrupados().add(prod);
+		}
+			
+	}
+}

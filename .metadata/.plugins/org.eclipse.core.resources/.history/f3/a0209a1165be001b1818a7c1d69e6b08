@@ -1,0 +1,21 @@
+package br.gov.ms.corumba.resources.dto.produtos;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import br.gov.ms.corumba.entities.Local;
+import br.gov.ms.corumba.entities.Preco;
+import br.gov.ms.corumba.entities.Produto;
+import br.gov.ms.corumba.entities.Roteador;
+import br.gov.ms.corumba.entities.Servico;
+import lombok.Data;
+
+@Data
+public class ProdutoDTO {
+
+	private Long id;
+	private String linhaOuRamal;
+	private String contrato;
+	private Produto agrupador;
+	private LocalDate dataEdicao;
+}

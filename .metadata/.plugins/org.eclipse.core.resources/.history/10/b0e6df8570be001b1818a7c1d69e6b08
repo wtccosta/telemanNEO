@@ -1,0 +1,5 @@
+package br.gov.ms.corumba.resources.dto.local;
+
+public class LocalDTO {
+
+}

@@ -1,0 +1,171 @@
+package br.gov.ms.corumba.controllers.dto;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import br.gov.ms.corumba.model.Local;
+import br.gov.ms.corumba.model.Produto;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+public class ProdutoDto implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@NotBlank
+	private String linhaOuRamal;
+	@NotNull
+	private String local;
+	@NotNull
+	private String nomePlanoOperadora;
+	@NotNull
+	private BigDecimal valuePrecoDoPlano;
+	@NotNull
+	private String nomeServicoOperadora;
+	@NotNull
+	private BigDecimal valuePrecoDoServico;
+	@NotNull
+	private String nomeRoteador;
+	@NotNull
+	private String valueVelocidadeInternet;
+	@NotNull
+	private List<Produto> terminaisAgrupador = new ArrayList<>();
+	
+	public ProdutoDto() {
+	}
+
+	
+	public ProdutoDto(@NotBlank String linhaOuRamal, @NotNull String local, @NotNull String nomePlanoOperadora,
+			@NotNull BigDecimal valuePrecoDoPlano, @NotNull String nomeServicoOperadora,
+			@NotNull BigDecimal valuePrecoDoServico, @NotNull String nomeRoteador,
+			@NotNull String valueVelocidadeInternet, @NotNull List<Produto> terminaisAgrupador) {
+		super();
+		this.linhaOuRamal = linhaOuRamal;
+		this.local = local;
+		this.nomePlanoOperadora = nomePlanoOperadora;
+		this.valuePrecoDoPlano = valuePrecoDoPlano;
+		this.nomeServicoOperadora = nomeServicoOperadora;
+		this.valuePrecoDoServico = valuePrecoDoServico;
+		this.nomeRoteador = nomeRoteador;
+		this.valueVelocidadeInternet = valueVelocidadeInternet;
+		this.terminaisAgrupador = terminaisAgrupador;
+	}
+
+
+
+	public ProdutoDto(Produto entity) {
+		linhaOuRamal = entity.getLinhaOuRamal();
+		local = entity.getLocal().getNome();
+		nomePlanoOperadora = entity.getPlanoOperadora().getNome();
+		valuePrecoDoPlano = entity.getPrecoDoPlano().getValue();
+		nomeServicoOperadora = entity.getServicoOperadora().getNome();
+		valuePrecoDoServico = entity.getPrecoDoServico().getValue();
+		nomeRoteador = entity.getRoteador().getNome();
+		valueVelocidadeInternet = entity.getVelocidadeInternet().getValue();
+		terminaisAgrupador = entity.getTerminaisAgrupador();
+	}
+
+
+	public String getLinhaOuRamal() {
+		return linhaOuRamal;
+	}
+
+
+	public void setLinhaOuRamal(String linhaOuRamal) {
+		this.linhaOuRamal = linhaOuRamal;
+	}
+
+
+	public String getLocal() {
+		return local;
+	}
+
+
+	public void setLocal(String local) {
+		this.local = local;
+	}
+
+
+	public String getNomePlanoOperadora() {
+		return nomePlanoOperadora;
+	}
+
+
+	public void setNomePlanoOperadora(String nomePlanoOperadora) {
+		this.nomePlanoOperadora = nomePlanoOperadora;
+	}
+
+
+	public BigDecimal getValuePrecoDoPlano() {
+		return valuePrecoDoPlano;
+	}
+
+
+	public void setValuePrecoDoPlano(BigDecimal valuePrecoDoPlano) {
+		this.valuePrecoDoPlano = valuePrecoDoPlano;
+	}
+
+
+	public String getNomeServicoOperadora() {
+		return nomeServicoOperadora;
+	}
+
+
+	public void setNomeServicoOperadora(String nomeServicoOperadora) {
+		this.nomeServicoOperadora = nomeServicoOperadora;
+	}
+
+
+	public BigDecimal getValuePrecoDoServico() {
+		return valuePrecoDoServico;
+	}
+
+
+	public void setValuePrecoDoServico(BigDecimal valuePrecoDoServico) {
+		this.valuePrecoDoServico = valuePrecoDoServico;
+	}
+
+
+	public String getNomeRoteador() {
+		return nomeRoteador;
+	}
+
+
+	public void setNomeRoteador(String nomeRoteador) {
+		this.nomeRoteador = nomeRoteador;
+	}
+
+
+	public String getValueVelocidadeInternet() {
+		return valueVelocidadeInternet;
+	}
+
+
+	public void setValueVelocidadeInternet(String valueVelocidadeInternet) {
+		this.valueVelocidadeInternet = valueVelocidadeInternet;
+	}
+
+
+	public List<Produto> getTerminaisAgrupador() {
+		return terminaisAgrupador;
+	}
+
+
+	public void setTerminaisAgrupador(List<Produto> terminaisAgrupador) {
+		this.terminaisAgrupador = terminaisAgrupador;
+	}
+
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+	
+}

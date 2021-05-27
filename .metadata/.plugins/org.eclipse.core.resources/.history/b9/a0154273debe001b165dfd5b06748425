@@ -1,0 +1,29 @@
+package br.gov.ms.corumba.resources.dto.produtos;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Component;
+
+import lombok.Data;
+
+@Data
+@Component
+public class ProdutoInputDTO {
+	private Long id;
+	private String linhaOuRamal;
+	private String contrato;
+	private Long agrupadorId;
+	private List<ListaProdutoDTO> numerosAgrupados = new ArrayList<>();
+	private Long localId;
+	private Long servicoId;
+	private Long precoPlanoId;
+	private Long precoServicoId;
+	private Long roteadorId;
+	private Integer diaVencimento;
+	private LocalDate dataInstalacao;
+	private LocalDate dataCadastro;
+	private LocalDate dataEdicao;
+	
+}

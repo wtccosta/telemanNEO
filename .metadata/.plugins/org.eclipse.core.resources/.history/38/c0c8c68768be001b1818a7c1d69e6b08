@@ -1,0 +1,49 @@
+package br.gov.ms.corumba.resources.dto.produtos;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import br.gov.ms.corumba.entities.Local;
+import br.gov.ms.corumba.entities.Preco;
+import br.gov.ms.corumba.entities.Produto;
+import br.gov.ms.corumba.entities.Roteador;
+import br.gov.ms.corumba.entities.Servico;
+import lombok.Data;
+
+@Data
+public class ProdutoDTO {
+
+	private Long id;
+	private String linhaOuRamal;
+	private String contrato;
+	private Produto agrupador;
+	private List<Produto> numerosAgrupados;
+	private String local;
+	private String servico;
+	private Double precoPlano;
+	private Double precoServico;
+	private String roteador;
+	private Integer diaVencimento;
+	private LocalDate dataInstalacao;
+	private LocalDate dataCadastro;
+	private LocalDate dataEdicao;
+	
+	public ProdutoDTO(Produto entity) {
+		id = entity.getId();
+		linhaOuRamal = entity.getLinhaOuRamal();
+		contrato = entity.getContrato();
+		agrupador = entity.getAgrupador();
+		numerosAgrupados = entity.getNumerosAgrupados();
+		local = entity.getLocal().getNome();
+		servico = entity.getServico().getNome();
+		precoPlano = entity.getPrecoPlano().getValor();
+		precoServico = entity.getPrecoServico().getValor();
+		roteador = entity.getRoteador().getNome();
+		diaVencimento = entity.getDiaVencimento();
+		dataInstalacao = entity.getDataInstalacao();
+		dataCadastro = entity.getDataCadastro();
+		dataEdicao = entity.getDataEdicao();
+	}
+	
+	
+}

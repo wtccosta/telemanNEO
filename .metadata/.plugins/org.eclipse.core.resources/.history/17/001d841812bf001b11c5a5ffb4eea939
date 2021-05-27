@@ -1,0 +1,22 @@
+package br.gov.ms.corumba.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import br.gov.ms.corumba.entities.Plano;
+import br.gov.ms.corumba.repositories.PlanoRepository;
+import br.gov.ms.corumba.services.exceptions.ResourceNotFoundException;
+
+@Service
+public class EnderecoService {
+
+	@Autowired
+	private PlanoRepository repository;
+	
+	@Transactional(readOnly = true)
+	public Plano findOnentity(Long id) {
+		return repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Plano não encontrado, id: "+id));
+		
+	}
+}

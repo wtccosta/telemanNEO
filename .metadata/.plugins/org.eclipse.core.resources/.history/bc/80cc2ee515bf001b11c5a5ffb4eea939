@@ -1,0 +1,26 @@
+package br.gov.ms.corumba.resources.dto.servico;
+
+import java.io.Serializable;
+
+import br.gov.ms.corumba.entities.Endereco;
+import br.gov.ms.corumba.entities.Local;
+import lombok.Data;
+
+@Data
+public class ServicoDTO implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
+	private Long id;
+	private String nome;
+	private String descricao;
+	private Endereco endereco;
+	
+	public ServicoDTO(Local entity) {
+		id = entity.getId();
+		nome = entity.getNome();
+		descricao = entity.getDescricao();
+
+	}
+
+}

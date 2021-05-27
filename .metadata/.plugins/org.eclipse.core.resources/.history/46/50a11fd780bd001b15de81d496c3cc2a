@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head th:replace="~{base :: head('Gestão de Agrupadores')}"></head>
+
+<body>
+	<nav th:replace="~{base :: menu}"></nav>
+	<div class="container">
+
+		<table class="table table-striped table-hover" id="listNumbers">
+			<thead>
+				<tr>
+					<th>Número/Ramal</th>
+					<th>Local</th>
+					<th>Data Atualização</th>
+					<th>Detalhes</th>
+					<th>Agrupador</th>
+				</tr>
+			</thead>
+					{{message}}
+				</table>
+
+	<div th:replace="~{base :: myScripts}"></div>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+	
+	<script>
+		const app = new Vue({
+			el: '#listNumbers',
+			data: {
+				message: 'Hello Vue!'
+			},
+			methods: {
+				loadData: () => {
+					this.message = this.message.split('').reverse().join('')
+				}
+			}
+		})
+	</script>
+
+
+
+</body>
+
+</html>
