@@ -1,0 +1,6 @@
+package br.gov.ms.corumba.repositories;
+
+public interface ProdutosRespositoryQueries {
+
+	void deleteOneProduct(Long id);
+}

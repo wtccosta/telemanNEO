@@ -6,14 +6,24 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value=""/>
+		<item key="selection" value="plano"/>
 		<list key="findhistory">
+			<item value="local"/>
+			<item value="Local"/>
+			<item value="produtos"/>
 			<item value="this."/>
 			<item value="permissao"/>
 			<item value="users"/>
 			<item value="pessoas"/>
 		</list>
 		<list key="replacehistory">
+			<item value="plano"/>
+			<item value="Plano"/>
+			<item value="preco"/>
+			<item value="Preco"/>
+			<item value="servico"/>
+			<item value="Servico"/>
+			<item value="servicos"/>
 			<item value=""/>
 			<item value="info"/>
 		</list>

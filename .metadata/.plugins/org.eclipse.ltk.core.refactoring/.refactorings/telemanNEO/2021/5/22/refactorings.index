@@ -36,3 +36,8 @@
 1622146312680	Copy compilation unit
 1622146552701	Copy package
 1622146572686	Rename type 'ServicoDTO'
+1622231236540	Copy file
+1622231248646	Rename resource 'V002__add_column_msos_and_senha_on_product_table.sql'
+1622251648574	Rename compilation unit 'PeodutoRespositoryImp.java'
+1622251712175	Rename type 'ProdutosRespositoryQueries'
+1622254592460	Rename compilation unit 'ProdutoRepositoryImp.java'

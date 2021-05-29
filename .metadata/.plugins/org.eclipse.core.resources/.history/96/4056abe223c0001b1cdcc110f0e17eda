@@ -1,0 +1,29 @@
+package br.gov.ms.corumba.repositories.infrastructure;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+import org.springframework.stereotype.Repository;
+
+import br.gov.ms.corumba.repositories.ProdutosRepositoryQueries;
+
+@Repository
+public class ProdutosRepositoryImp implements ProdutosRepositoryQueries {
+
+	@PersistenceContext
+	private EntityManager manager;
+	
+	@Override
+	public void deleteOneProduct(Long id) {
+		var jpql = "delete from Produtos p where p.id = :id";
+		
+		Query query = manager.createQuery(jpql)
+				.setParameter("id", id);
+		int rowsDeleted = query.executeUpdate();
+		System.out.println("entities deleted: " + rowsDeleted);
+		 manager.getTransaction().commit();
+		 manager.close();
+	}
+
+}

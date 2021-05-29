@@ -1,8 +1,5 @@
 package br.gov.ms.corumba.services;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,42 +24,43 @@ public class ProdutoService {
 
 	@Autowired
 	private ProdutosRepository repository;
-	
+
 	@Autowired
 	private LocalService localService;
-	
+
 	@Autowired
 	private PlanoService planoService;
-	
+
 	@Autowired
 	private ServicoService ServicoService;
-	
+
 	@Autowired
 	private PrecoService precoService;
-	
+
 	@Autowired
 	private RoteadorService roteadorService;
-	
-	@Autowired 
+
+	@Autowired
 	private VelocidadeInternetService velocidadeInternetService;
-	
+
 	@Transactional(readOnly = true)
 	public Page<ListaProdutoDTO> findAllPaged(Pageable pageable) {
 		Page<Produto> produtos = repository.findAll(pageable);
-		return produtos
-				.map(x -> new ListaProdutoDTO(x));
+		return produtos.map(x -> new ListaProdutoDTO(x));
 	}
-	
+
 	@Transactional(readOnly = true)
 	public ProdutoDTO findOne(Long id) {
-		Produto produto = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Produto não encontrado, id: "+id));
+		Produto produto = repository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado, id: " + id));
 		return new ProdutoDTO(produto);
-	}
-	
+	}	
+
 	@Transactional(readOnly = false)
 	public ProdutoDTO persist(ProdutoInputDTO dto) {
-		if( repository.findByLinhaOuRamal(dto.getLinhaOuRamal()).isPresent() ) {
-			throw new DuplicateItemException("Número de terminal "+ dto.getLinhaOuRamal() +" já existe. Vedada entrada de dados duplicados.");
+		if (repository.findByLinhaOuRamal(dto.getLinhaOuRamal()).isPresent()) {
+			throw new DuplicateItemException(
+					"Número de terminal " + dto.getLinhaOuRamal() + " já existe. Vedada entrada de dados duplicados.");
 		}
 		try {
 			Produto entity = new Produto();
@@ -70,43 +68,61 @@ public class ProdutoService {
 			entity = repository.save(entity);
 			populateNumerosAgrupados(dto, entity);
 			return new ProdutoDTO(entity);
-		} 
-		catch (EntityNotFoundException e) {
-			throw new ResourceNotFoundException("Id not found: "+ e.getMessage());
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Id not found: " + e.getMessage());
 		}
-		
+
 	}
-	
+
 	@Transactional(readOnly = true)
 	public Produto findOneEntity(Long id) {
-		return repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Produto não encontrado, id: "+id));
-		
+		return repository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado, id: " + id));
+
 	}
-	
-	
-    @Transactional(readOnly = false)
+
+	//@Transactional(readOnly = false)
 	public void update(Long id, ProdutoInputDTO dto) {
 		Produto entity = findOneEntity(id);
 		copyDtoToEntity(dto, entity);
-		repository.save(entity);
+//		if(dto.getNumerosAgrupados() != null || entity.getNumerosAgrupados() != null) {
+//			entity.getNumerosAgrupados().clear();
+//			List<Produto> agrupados = new ArrayList<>();
+//			for(Long prodId : dto.getNumerosAgrupados()) {
+//				System.out.println(prodId);
+//				Produto prodAgrupado = findOneEntity(prodId);
+////				if(prodAgrupado != null) {
+//					agrupados.add(prodAgrupado);
+////				}	
+//			}
+//			entity.setNumerosAgrupados(agrupados);
+//		}
+		repository.saveAndFlush(entity);
 	}
-    
-    public void delete(Long id) {
+
+	@Transactional
+	public void delete(Long id) {
+
 		try {
-		repository.deleteById(id);
-		}
-		catch (EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundException("Id not found "+id);
-		}
-		catch(DataIntegrityViolationException e) {
+			//Produto pro = repository.findById(id).orElseThrow();
+			//repository.deleteProduct(id);
+			repository.deleteById(id);
+			//repository.delete(pro);
+		} catch (EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundException("Id not found " + id);
+		} catch (DataIntegrityViolationException e) {
 			throw new DatabaseException("Integrity violation");
 		}
 	}
-	
+
 	private void copyDtoToEntity(ProdutoInputDTO dto, Produto entity) {
-		entity.setLinhaOuRamal(dto.getLinhaOuRamal());
+		if (dto.getId() == null) {
+			entity.setLinhaOuRamal(dto.getLinhaOuRamal());
+		}
 		entity.setContrato(dto.getContrato());
 		entity.setAgrupador(findOneEntity(dto.getAgrupadorId()));
+		entity.setMsos(dto.getMsos());
+		entity.setSenha(dto.getSenha());
 		entity.setLocal(localService.findOneEntity(dto.getLocalId()));
 		entity.setServico(ServicoService.findOneEntity(dto.getServicoId()));
 		entity.setPlano(planoService.findOneEntity(dto.getPlanoId()));
@@ -116,24 +132,25 @@ public class ProdutoService {
 		entity.setVelocidade(velocidadeInternetService.findOneEntity(dto.getVelocidadeInternetId()));
 		entity.setDiaVencimento(dto.getDiaVencimento());
 		entity.setDataInstalacao(dto.getDataInstalacao());
-		
-		List<Produto> auxList = new ArrayList<>();
-		for(Long agrupadorId : dto.getNumerosAgrupados()) {
-			Produto prod = findOneEntity(agrupadorId);
-			auxList.add(prod);
-		}
-		entity.setNumerosAgrupados(auxList);
-			
+//
+//		Set<Produto> auxList = new HashSet<>();
+//		for (Long agrupadorId : dto.getNumerosAgrupados()) {
+//			Produto prod = findOneEntity(agrupadorId);
+//			auxList.add(prod);
+//		}
+//		entity.setNumerosAgrupados(auxList);
+
 	}
-		
+
 	private void populateNumerosAgrupados(ProdutoInputDTO dto, Produto entity) {
-		for(Long agrupadorId : dto.getNumerosAgrupados()) {
+		if (entity.getNumerosAgrupados() != null) {
+			entity.getNumerosAgrupados().clear();
+		}
+		entity.getNumerosAgrupados().clear();
+		for (Long agrupadorId : dto.getNumerosAgrupados()) {
 			Produto prod = findOneEntity(agrupadorId);
 			prod.setAgrupador(entity);
 		}
 	}
 
-
-
-	
 }

@@ -2,12 +2,12 @@ package br.gov.ms.corumba.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,16 +22,19 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name = "produto")
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Produto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@EqualsAndHashCode.Include
 	private Long id;
 
 	@Column(name = "linha_ou_ramal")
@@ -45,11 +48,12 @@ public class Produto implements Serializable {
 	private Produto agrupador;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "agrupador", 
-			targetEntity = Produto.class, 
-			fetch = FetchType.EAGER, 
-			cascade = CascadeType.ALL)
-	private List<Produto> numerosAgrupados;
+	@OneToMany(mappedBy = "agrupador", targetEntity = Produto.class, cascade = CascadeType.ALL, orphanRemoval = false)
+	private List<Produto> numerosAgrupados = new ArrayList<>();
+	
+	private String msos;
+	
+	private String senha;
 	
 	@ManyToOne
 	@JoinColumn(name = "local_id")

@@ -57,7 +57,7 @@ public class ResourcesExceptionHandler {
 	}
 	
 	@ExceptionHandler(SQLDataException.class)
-	public ResponseEntity<StandardError> illegalArgumentException(SQLDataException e, HttpServletRequest request){
+	public ResponseEntity<StandardError> SQLDataException(SQLDataException e, HttpServletRequest request){
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		StandardError err = new StandardError();
 		err.setTimestamp(Instant.now());
@@ -70,7 +70,7 @@ public class ResourcesExceptionHandler {
 	}
 	
 	@ExceptionHandler(DuplicateItemException.class)
-	public ResponseEntity<StandardError> illegalArgumentException(DuplicateItemException e, HttpServletRequest request){
+	public ResponseEntity<StandardError> DuplicateItemException(DuplicateItemException e, HttpServletRequest request){
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		StandardError err = new StandardError();
 		err.setTimestamp(Instant.now());
