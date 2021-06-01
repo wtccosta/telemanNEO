@@ -2,8 +2,8 @@ package br.gov.ms.corumba.resources.dto.produtos;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import br.gov.ms.corumba.entities.Produto;
@@ -19,7 +19,7 @@ public class ProdutoDTO implements Serializable{
 	private String contrato;
 	private String agrupador;
 	private Integer totalNumerosAgrupados = 0;
-	private List<ListaProdutoDTO> numerosAgrupados = new ArrayList<>();
+	private Set<ListaProdutoDTO> numerosAgrupados = new HashSet<>();
 	private String local;
 	private String plano;
 	private String servico;
@@ -50,14 +50,14 @@ public class ProdutoDTO implements Serializable{
 		totalNumerosAgrupados = (entity.getNumerosAgrupados() != null) ? entity.getNumerosAgrupados().size() : null;
 	}
 	
-	private List<ListaProdutoDTO> convertToListaProductDto(Produto entity){
-		List<Produto> produtos = entity.getNumerosAgrupados();
+	private Set<ListaProdutoDTO> convertToListaProductDto(Produto entity){
+		Set<Produto> produtos = entity.getNumerosAgrupados();
 		if(produtos == null || produtos.isEmpty()) {
 			return null;
 		}
 		return produtos.stream()
 				.map(x-> new ListaProdutoDTO(x))
-				.collect(Collectors.toList());
+				.collect(Collectors.toSet());
 	}
 	
 	

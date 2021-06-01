@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="br.gov.ms.corumba.resources.dto.local.LocalDTO"/>
-    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.GetMapping"/>
-    <fullyQualifiedTypeName name="java.util.stream.Collectors"/>
     <fullyQualifiedTypeName name="org.springframework.data.domain.Pageable"/>
     <fullyQualifiedTypeName name="org.springframework.data.domain.Page"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PostMapping"/>
-    <fullyQualifiedTypeName name="org.springframework.stereotype.Component"/>
     <fullyQualifiedTypeName name="org.springframework.web.servlet.support.ServletUriComponentsBuilder"/>
     <fullyQualifiedTypeName name="java.net.URI"/>
     <fullyQualifiedTypeName name="java.io.Serializable"/>
@@ -29,7 +25,6 @@
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PutMapping"/>
     <fullyQualifiedTypeName name="org.springframework.http.ResponseEntity"/>
-    <fullyQualifiedTypeName name="br.gov.ms.corumba.entities.Produto"/>
     <fullyQualifiedTypeName name="br.gov.ms.corumba.resources.dto.produtos.ProdutoInputDTO"/>
     <fullyQualifiedTypeName name="org.springframework.dao.DataIntegrityViolationException"/>
     <fullyQualifiedTypeName name="br.gov.ms.corumba.services.exceptions.DatabaseException"/>
@@ -49,10 +44,7 @@
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ResponseStatus"/>
     <fullyQualifiedTypeName name="org.springframework.http.HttpStatus"/>
     <fullyQualifiedTypeName name="br.gov.ms.corumba.services.ProdutoService"/>
-    <fullyQualifiedTypeName name="javax.persistence.FetchType"/>
     <fullyQualifiedTypeName name="javax.persistence.CascadeType"/>
-    <fullyQualifiedTypeName name="java.util.Set"/>
-    <fullyQualifiedTypeName name="java.util.HashSet"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="br.gov.ms.corumba.repositories.ProdutosRespositoryQueries"/>
     <fullyQualifiedTypeName name="org.springframework.stereotype.Repository"/>
@@ -60,4 +52,12 @@
     <fullyQualifiedTypeName name="javax.persistence.Query"/>
     <fullyQualifiedTypeName name="br.gov.ms.corumba.repositories.ProdutosRepositoryQueries"/>
     <fullyQualifiedTypeName name="org.springframework.transaction.annotation.Transactional"/>
+    <fullyQualifiedTypeName name="org.springframework.stereotype.Component"/>
+    <fullyQualifiedTypeName name="lombok.EqualsAndHashCode"/>
+    <fullyQualifiedTypeName name="lombok.EqualsAndHashCode.Include"/>
+    <fullyQualifiedTypeName name="br.gov.ms.corumba.entities.Produto"/>
+    <fullyQualifiedTypeName name="javax.persistence.FetchType"/>
+    <fullyQualifiedTypeName name="java.util.Set"/>
+    <fullyQualifiedTypeName name="java.util.HashSet"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
 </qualifiedTypeNameHistroy>

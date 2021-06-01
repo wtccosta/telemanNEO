@@ -1,8 +1,0 @@
-package br.gov.ms.corumba.entities;
-
-public class Plano extends AbastractEntity {
-
-	private static final long serialVersionUID = 1L;
-
-
-}

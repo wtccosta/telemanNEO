@@ -104,10 +104,8 @@ public class ProdutoService {
 	public void delete(Long id) {
 
 		try {
-			//Produto pro = repository.findById(id).orElseThrow();
-			//repository.deleteProduct(id);
-			repository.deleteById(id);
-			//repository.delete(pro);
+			Produto pro = repository.findById(id).orElseThrow();
+			repository.delete(pro);
 		} catch (EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException("Id not found " + id);
 		} catch (DataIntegrityViolationException e) {
@@ -146,7 +144,6 @@ public class ProdutoService {
 		if (entity.getNumerosAgrupados() != null) {
 			entity.getNumerosAgrupados().clear();
 		}
-		entity.getNumerosAgrupados().clear();
 		for (Long agrupadorId : dto.getNumerosAgrupados()) {
 			Produto prod = findOneEntity(agrupadorId);
 			prod.setAgrupador(entity);
