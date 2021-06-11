@@ -1,33 +1,42 @@
 <template>
-  <div>
-  <b-navbar type="dark" variant="dark">
-    <b-navbar-nav>
-       <router-link to="/" class="nav-link">Home</router-link> |
-       <router-link to="/about" class="nav-link">About</router-link>
+<div>
+  <b-navbar toggleable="lg" type="dark" variant="dark">
+     <router-link tag="b-navbar-brand" to="/" >TelemaNEO</router-link>
+    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-      <!-- Navbar dropdowns -->
-      <b-nav-item-dropdown text="Lang" right>
-        <b-dropdown-item href="#">EN</b-dropdown-item>
-        <b-dropdown-item href="#">ES</b-dropdown-item>
-        <b-dropdown-item href="#">RU</b-dropdown-item>
-        <b-dropdown-item href="#">FA</b-dropdown-item>
+    <b-collapse id="nav-collapse" is-nav>
+      <b-navbar-nav>
+         <!-- Navbar dropdowns -->
+      <b-nav-item-dropdown text="Técnico" right>
+       
+        <router-link tag="b-dropdown-item" to="/tecnico/terminais" >Terminais</router-link>
+    
       </b-nav-item-dropdown>
 
-      <b-nav-item-dropdown text="User" right>
-        <b-dropdown-item href="#">Account</b-dropdown-item>
-        <b-dropdown-item href="#">Settings</b-dropdown-item>
-      </b-nav-item-dropdown>
-    </b-navbar-nav>
+        <router-link tag="b-nav-item-dropdown :t" to="/tecnico" >Técnico</router-link>
+        <router-link tag="b-nav-item" to="/financeiro" >Financeiro</router-link>
+      </b-navbar-nav>
+
+      <!-- Right aligned nav items -->
+      <b-navbar-nav class="ml-auto">
+
+        <b-nav-item-dropdown right>
+          <!-- Using 'button-content' slot -->
+          <template #button-content>
+            <em>Bob Brow</em>
+          </template>
+          <b-dropdown-item href="#">Perfil</b-dropdown-item>
+          <b-dropdown-item href="#">Sair</b-dropdown-item>
+        </b-nav-item-dropdown>
+      </b-navbar-nav>
+    </b-collapse>
   </b-navbar>
 </div>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
 <style>
-
 </style>
